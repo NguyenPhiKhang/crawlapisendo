@@ -60,17 +60,16 @@ public class ImageController {
 
     @PostMapping("/images/upload-multi-file")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("files") MultipartFile[] files) throws IOException {
-        List<MultipartFile> multipartFiles = new ArrayList<MultipartFile>();
+        List<MultipartFile> multipartFiles = new ArrayList<>();
 
         Arrays.stream(files).forEach(file -> {
             String fileName = ImageUtil.fileName(imageService).concat(".").concat(Objects.requireNonNull(file.getContentType()).split("/")[1]);
-            MultipartFile multipartFile = null;
             try {
-                multipartFile = new MockMultipartFile(fileName, fileName, file.getContentType(), file.getInputStream());
+                MultipartFile multipartFile = new MockMultipartFile(fileName, fileName, file.getContentType(), file.getInputStream());
+                multipartFiles.add(multipartFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            multipartFiles.add(multipartFile);
         });
         return ImageUtil.uploadImages(imageService, multipartFiles);
     }
