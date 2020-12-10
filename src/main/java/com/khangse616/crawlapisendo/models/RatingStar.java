@@ -1,9 +1,13 @@
 package com.khangse616.crawlapisendo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "rating_star")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class RatingStar {
 
     @Id
@@ -23,6 +27,7 @@ public class RatingStar {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnore
     private Product product;
 
     public RatingStar() {

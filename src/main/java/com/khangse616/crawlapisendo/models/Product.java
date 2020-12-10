@@ -1,11 +1,16 @@
 package com.khangse616.crawlapisendo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -54,6 +59,9 @@ public class Product implements Serializable {
             cascade =  CascadeType.ALL,
             mappedBy = "product")
     private RatingStar ratingStar;
+
+    @ManyToMany(mappedBy = "products", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+    private Set<Category> categories = new HashSet<>();
 
     public Product(){}
 
@@ -223,5 +231,13 @@ public class Product implements Serializable {
 
     public void setStatusRecord(boolean statusRecord) {
         this.statusRecord = statusRecord;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
