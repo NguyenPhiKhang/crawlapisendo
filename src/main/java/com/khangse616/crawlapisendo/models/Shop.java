@@ -1,5 +1,7 @@
 package com.khangse616.crawlapisendo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -32,6 +34,7 @@ public class Shop {
     private User user;
 
     @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Product> products;
 
     public Shop(){}

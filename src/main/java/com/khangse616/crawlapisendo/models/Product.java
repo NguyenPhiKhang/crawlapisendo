@@ -67,7 +67,7 @@ public class Product implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "admin_id", nullable = false)
-    @JsonIgnore
+//    @JsonIgnore
     private Shop shop;
 
     @ManyToMany(targetEntity = Image.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
@@ -81,6 +81,9 @@ public class Product implements Serializable {
 //            "id"
 //    })
     private List<Image> images;
+
+    @ManyToMany(targetEntity = Option.class, mappedBy = "products", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+    private List<Option> options;
 
     public Product(){}
 
@@ -258,5 +261,29 @@ public class Product implements Serializable {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public List<Option> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<Option> options) {
+        this.options = options;
     }
 }
