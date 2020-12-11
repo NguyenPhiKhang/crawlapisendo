@@ -1,11 +1,13 @@
 package com.khangse616.crawlapisendo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -52,7 +54,7 @@ public class Product implements Serializable {
     private boolean isFreeShipping;
     @Column(name = "is_event")
     private boolean isEvent;
-    @Column(name = "status_record")
+    @Column(name = "record_status")
     private boolean statusRecord;
 
     @OneToOne(fetch = FetchType.LAZY,
@@ -60,8 +62,25 @@ public class Product implements Serializable {
             mappedBy = "product")
     private RatingStar ratingStar;
 
-    @ManyToMany(mappedBy = "products", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+    @ManyToMany(mappedBy = "products", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH},  fetch = FetchType.LAZY)
     private Set<Category> categories = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "admin_id", nullable = false)
+    @JsonIgnore
+    private Shop shop;
+
+    @ManyToMany(targetEntity = Image.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(
+            name = "images_products",
+            joinColumns =
+            @JoinColumn(name = "image_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
+//    @JsonIgnoreProperties(value = {
+//            "price",
+//            "id"
+//    })
+    private List<Image> images;
 
     public Product(){}
 
