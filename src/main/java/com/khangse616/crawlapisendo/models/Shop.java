@@ -34,4 +34,93 @@ public class Shop {
     @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Product> products;
 
+    public Shop(){}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public float getGoodReviewPercent() {
+        return goodReviewPercent;
+    }
+
+    public void setGoodReviewPercent(float goodReviewPercent) {
+        this.goodReviewPercent = goodReviewPercent;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getWarehouseCity() {
+        return warehouseCity;
+    }
+
+    public void setWarehouseCity(String warehouseCity) {
+        this.warehouseCity = warehouseCity;
+    }
+
+    public boolean isCertified() {
+        return isCertified;
+    }
+
+    public void setCertified(boolean certified) {
+        isCertified = certified;
+    }
+
+    public boolean isRecordStatus() {
+        return recordStatus;
+    }
+
+    public void setRecordStatus(boolean recordStatus) {
+        this.recordStatus = recordStatus;
+    }
+
+    public Image getLogo() {
+        return logo;
+    }
+
+    public void setLogo(Image logo) {
+        this.logo = logo;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
 }
