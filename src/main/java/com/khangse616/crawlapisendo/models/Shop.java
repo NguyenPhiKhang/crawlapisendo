@@ -26,7 +26,7 @@ public class Shop {
     private boolean recordStatus;
 
     @OneToOne (cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="logo", unique= true, nullable=true, insertable=true, updatable=true)
+    @JoinColumn(name="logo", unique= true, nullable=true, insertable=true, updatable=true, referencedColumnName = "id")
     private Image logo;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)

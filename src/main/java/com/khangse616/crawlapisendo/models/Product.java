@@ -67,7 +67,6 @@ public class Product implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "admin_id", nullable = false)
-//    @JsonIgnore
     private Shop shop;
 
     @ManyToMany(targetEntity = Image.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
@@ -90,6 +89,10 @@ public class Product implements Serializable {
 
     @OneToMany(targetEntity = Rating.class, mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Rating> ratings;
+
+    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="img_url", unique= true, nullable=true, insertable=true, updatable=true, referencedColumnName = "id")
+    private Image imgUrl;
 
     public Product(){}
 

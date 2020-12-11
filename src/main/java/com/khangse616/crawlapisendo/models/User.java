@@ -25,7 +25,7 @@ public class User {
     private String address;
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="image_avatar", unique= true, nullable=true, insertable=true, updatable=true)
+    @JoinColumn(name="image_avatar", unique= true, nullable=true, insertable=true, updatable=true, referencedColumnName = "id")
     private Image imageAvatar;
 
     public User(){}
