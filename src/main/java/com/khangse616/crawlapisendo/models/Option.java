@@ -18,7 +18,7 @@ public class Option {
     @JoinColumn(name = "attribute_id", nullable = false)
     private Attribute attribute;
 
-    @ManyToMany(targetEntity = Image.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(targetEntity = Product.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
             name = "option_product",
             joinColumns =

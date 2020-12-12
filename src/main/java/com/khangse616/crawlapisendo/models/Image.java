@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "images")
@@ -22,7 +22,7 @@ public class Image implements Serializable {
 
     @ManyToMany(targetEntity = Product.class, mappedBy = "images", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
     @JsonIgnore
-    private List<Product> products;
+    private Set<Product> products;
 
     public Image(){}
 
@@ -65,11 +65,11 @@ public class Image implements Serializable {
         this.data = data;
     }
 
-    public List<Product> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(Set<Product> products) {
         this.products = products;
     }
 }

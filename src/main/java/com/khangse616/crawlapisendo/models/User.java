@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "shops")
+@Table(name = "users")
 public class User {
     @Id
     private int id;
@@ -23,9 +23,11 @@ public class User {
     private String sex;
     @Column(name = "address")
     private String address;
+    @Column(name = "record_status")
+    private boolean recordStatus;
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="image_avatar", unique= true, nullable=true, insertable=true, updatable=true, referencedColumnName = "id")
+    @JoinColumn(name="image_avatar", unique= true, referencedColumnName = "id")
     private Image imageAvatar;
 
     public User(){}
@@ -92,6 +94,14 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public boolean isRecordStatus() {
+        return recordStatus;
+    }
+
+    public void setRecordStatus(boolean recordStatus) {
+        this.recordStatus = recordStatus;
     }
 
     public Image getImageAvatar() {

@@ -22,7 +22,7 @@ public class Comment {
     private String parentId;
 
     @ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id", unique= true, nullable=true, insertable=true, updatable=true)
+    @JoinColumn(name="user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -73,16 +73,12 @@ public class Product implements Serializable {
     @JoinTable(
             name = "images_products",
             joinColumns =
-            @JoinColumn(name = "image_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
-//    @JsonIgnoreProperties(value = {
-//            "price",
-//            "id"
-//    })
-    private List<Image> images;
+            @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id", referencedColumnName = "id"))
+    private Set<Image> images = new HashSet<>();
 
     @ManyToMany(targetEntity = Option.class, mappedBy = "products", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
-    private List<Option> options;
+    private Set<Option> options;
 
     @OneToMany(targetEntity = Comment.class, mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Comment> comments;
@@ -280,20 +276,28 @@ public class Product implements Serializable {
         this.shop = shop;
     }
 
-    public List<Image> getImages() {
+    public Set<Image> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(Set<Image> images) {
         this.images = images;
     }
 
-    public List<Option> getOptions() {
+    public Set<Option> getOptions() {
         return options;
     }
 
-    public void setOptions(List<Option> options) {
+    public void setOptions(Set<Option> options) {
         this.options = options;
+    }
+
+    public Image getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(Image imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public Set<Comment> getComments() {

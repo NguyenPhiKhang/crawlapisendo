@@ -25,8 +25,8 @@ public class Shop {
     @Column(name = "record_status")
     private boolean recordStatus;
 
-    @OneToOne (cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="logo", unique= true, nullable=true, insertable=true, updatable=true, referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "logo", unique = true)
     private Image logo;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -37,7 +37,8 @@ public class Shop {
     @JsonIgnore
     private Set<Product> products;
 
-    public Shop(){}
+    public Shop() {
+    }
 
     public int getId() {
         return id;

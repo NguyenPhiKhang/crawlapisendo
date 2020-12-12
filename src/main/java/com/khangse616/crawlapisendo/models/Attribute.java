@@ -13,7 +13,7 @@ public class Attribute {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "attributes", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "attribute", cascade = CascadeType.ALL)
     private Set<Option> options = new HashSet<>();
 
     public Attribute(){}
