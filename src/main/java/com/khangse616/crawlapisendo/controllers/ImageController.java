@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin("http://localhost:3000")
 public class ImageController {
     @Autowired
     private ImageService imageService;
