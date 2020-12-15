@@ -30,6 +30,14 @@ public class Rating {
 
     public Rating(){}
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getComment() {
         return comment;
     }
