@@ -2,6 +2,7 @@ package com.khangse616.crawlapisendo.services;
 
 import com.khangse616.crawlapisendo.DTO.CategoriesProductDTO;
 import com.khangse616.crawlapisendo.DTO.ProductDTO;
+import com.khangse616.crawlapisendo.DTO.PropertiesProductDTO;
 import com.khangse616.crawlapisendo.models.Product;
 import com.khangse616.crawlapisendo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,10 @@ public class ProductService {
     }
 
     public String createProduct(ProductDTO productDTO){
-
+        PropertiesProductDTO propertiesProductDTO = productDTO.getProperties();
+        Product product = new Product();
+        product.setId(propertiesProductDTO.getId());
+        product.set
         return String.valueOf(productDTO.getProperties().getId());
     }
 }

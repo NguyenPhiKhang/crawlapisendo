@@ -57,6 +57,8 @@ public class Product implements Serializable {
     private boolean statusRecord;
     @Column(name = "time_created")
     private Timestamp timeCreated;
+    @Column(name = "time_updated")
+    private Timestamp timeUpdated;
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade =  CascadeType.ALL,
@@ -323,5 +325,13 @@ public class Product implements Serializable {
 
     public void setTimeCreated(Timestamp timeCreated) {
         this.timeCreated = timeCreated;
+    }
+
+    public Timestamp getTimeUpdated() {
+        return timeUpdated;
+    }
+
+    public void setTimeUpdated(Timestamp timeUpdated) {
+        this.timeUpdated = timeUpdated;
     }
 }
