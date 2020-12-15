@@ -22,6 +22,6 @@ public class ProductController {
 
     @PostMapping("/test")
     public String testCategory(@RequestBody ProductDTO productDTO){
-        return
+        return productService.createProduct(productDTO);
     }
 }
