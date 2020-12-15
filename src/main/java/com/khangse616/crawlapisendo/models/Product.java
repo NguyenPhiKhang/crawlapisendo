@@ -1,13 +1,11 @@
 package com.khangse616.crawlapisendo.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,7 +25,7 @@ public class Product implements Serializable {
     @Column(name = "promotion_percent")
     private int promotionPercent;
     @Column(name = "is_promotion")
-    private boolean isPromotion;
+    private boolean promotion;
     @Column(name = "description")
     private String description;
     @Column(name = "short_description")
@@ -37,7 +35,7 @@ public class Product implements Serializable {
     @Column(name = "quantity")
     private int quantity;
     @Column(name = "is_active")
-    private boolean isActive;
+    private boolean active;
     @Column(name = "shop_free_shipping")
     private boolean shopFreeShipping;
     @Column(name = "order_count")
@@ -51,9 +49,9 @@ public class Product implements Serializable {
     @Column(name = "sku_user")
     private String skuUser;
     @Column(name = "is_free_ship")
-    private boolean isFreeShipping;
+    private boolean freeShip;
     @Column(name = "is_event")
-    private boolean isEvent;
+    private boolean event;
     @Column(name = "record_status")
     private boolean statusRecord;
 
@@ -132,14 +130,6 @@ public class Product implements Serializable {
         this.promotionPercent = promotionPercent;
     }
 
-    public boolean isPromotion() {
-        return isPromotion;
-    }
-
-    public void setPromotion(boolean promotion) {
-        isPromotion = promotion;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -170,14 +160,6 @@ public class Product implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
     }
 
     public boolean isShopFreeShipping() {
@@ -226,22 +208,6 @@ public class Product implements Serializable {
 
     public void setSkuUser(String skuUser) {
         this.skuUser = skuUser;
-    }
-
-    public boolean isFreeShipping() {
-        return isFreeShipping;
-    }
-
-    public void setFreeShipping(boolean freeShipping) {
-        isFreeShipping = freeShipping;
-    }
-
-    public boolean isEvent() {
-        return isEvent;
-    }
-
-    public void setEvent(boolean event) {
-        isEvent = event;
     }
 
     public RatingStar getRatingStar() {
@@ -314,5 +280,37 @@ public class Product implements Serializable {
 
     public void setRatings(Set<Rating> ratings) {
         this.ratings = ratings;
+    }
+
+    public boolean isPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(boolean promotion) {
+        this.promotion = promotion;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isFreeShip() {
+        return freeShip;
+    }
+
+    public void setFreeShip(boolean freeShip) {
+        this.freeShip = freeShip;
+    }
+
+    public boolean isEvent() {
+        return event;
+    }
+
+    public void setEvent(boolean event) {
+        this.event = event;
     }
 }

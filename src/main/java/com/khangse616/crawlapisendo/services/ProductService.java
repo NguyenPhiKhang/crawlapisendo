@@ -14,7 +14,7 @@ public class ProductService {
     public ResponseEntity<Object> createUser(Product product) {
 //        Product newProduct = new Product();
 //        newProduct.setName(product.getName());
-
+        product.setStatusRecord(true);
         Product savedProduct = productRepository.save(product);
         if (productRepository.findById(savedProduct.getId()).isPresent())
             return ResponseEntity.ok("User Created Successfully");
