@@ -1,5 +1,6 @@
 package com.khangse616.crawlapisendo.services;
 
+import com.khangse616.crawlapisendo.DTO.CategoriesProductDTO;
 import com.khangse616.crawlapisendo.models.Product;
 import com.khangse616.crawlapisendo.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;

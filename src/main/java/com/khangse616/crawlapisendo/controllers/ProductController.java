@@ -1,5 +1,6 @@
 package com.khangse616.crawlapisendo.controllers;
 
+import com.khangse616.crawlapisendo.DTO.CategoriesProductDTO;
 import com.khangse616.crawlapisendo.models.Product;
 import com.khangse616.crawlapisendo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +17,10 @@ public class ProductController {
     @PostMapping("/product")
     public Object createProduct(@RequestBody Product product){
         return productService.createUser(product);
+    }
+
+    @PostMapping("/test")
+    public String testCategory(@RequestBody CategoriesProductDTO categoriesProductDTO){
+        return categoriesProductDTO.getCategory_level3_path();
     }
 }
