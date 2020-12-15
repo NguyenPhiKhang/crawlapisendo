@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,6 +55,8 @@ public class Product implements Serializable {
     private boolean event;
     @Column(name = "record_status")
     private boolean statusRecord;
+    @Column(name = "time_created")
+    private Timestamp timeCreated;
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade =  CascadeType.ALL,
@@ -312,5 +315,13 @@ public class Product implements Serializable {
 
     public void setEvent(boolean event) {
         this.event = event;
+    }
+
+    public Timestamp getTimeCreated() {
+        return timeCreated;
+    }
+
+    public void setTimeCreated(Timestamp timeCreated) {
+        this.timeCreated = timeCreated;
     }
 }

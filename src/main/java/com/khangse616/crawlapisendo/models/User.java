@@ -12,7 +12,7 @@ public class User {
     @Column(name = "name")
     private String name;
     @Column(name = "is_shop")
-    private boolean isShop;
+    private boolean shop;
     @Column(name = "email")
     private String email;
     @Column(name = "birthday")
@@ -49,11 +49,11 @@ public class User {
     }
 
     public boolean isShop() {
-        return isShop;
+        return shop;
     }
 
     public void setShop(boolean shop) {
-        isShop = shop;
+        this.shop = shop;
     }
 
     public String getEmail() {

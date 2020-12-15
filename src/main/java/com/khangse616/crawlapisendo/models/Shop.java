@@ -21,7 +21,7 @@ public class Shop {
     @Column(name = "warehouse_city")
     private String warehouseCity;
     @Column(name = "is_certified")
-    private boolean isCertified;
+    private boolean certified;
     @Column(name = "record_status")
     private boolean recordStatus;
 
@@ -89,11 +89,11 @@ public class Shop {
     }
 
     public boolean isCertified() {
-        return isCertified;
+        return certified;
     }
 
     public void setCertified(boolean certified) {
-        isCertified = certified;
+        this.certified = certified;
     }
 
     public boolean isRecordStatus() {
