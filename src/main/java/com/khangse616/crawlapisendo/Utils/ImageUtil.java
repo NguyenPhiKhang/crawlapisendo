@@ -1,6 +1,7 @@
 package com.khangse616.crawlapisendo.Utils;
 
 import com.khangse616.crawlapisendo.messages.ResponseMessage;
+import com.khangse616.crawlapisendo.models.Image;
 import com.khangse616.crawlapisendo.services.ImageService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class ImageUtil {
             imageService.store(file);
 
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message, file.getOriginalFilename()));
         } catch (Exception e) {
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
@@ -44,6 +45,8 @@ public class ImageUtil {
     }
 
     public static MultipartFile createMultipartFileFromUrl(ImageService imageService, String url) throws IOException {
+        if(url.equals("")||url.isEmpty())
+            return null;
         URL imageUrl = url.contains("media3.scdn.vn") ? new URL(url) : new URL("https://media3.scdn.vn" + url);
 
         System.out.println(imageUrl);
