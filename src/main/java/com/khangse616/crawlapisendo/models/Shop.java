@@ -3,6 +3,7 @@ package com.khangse616.crawlapisendo.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -24,6 +25,10 @@ public class Shop {
     private boolean certified;
     @Column(name = "record_status")
     private boolean recordStatus;
+    @Column(name = "time_created")
+    private Timestamp timeCreated;
+    @Column(name = "time_updated")
+    private Timestamp timeUpdated;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "logo", unique = true)
@@ -126,5 +131,21 @@ public class Shop {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    public Timestamp getTimeCreated() {
+        return timeCreated;
+    }
+
+    public void setTimeCreated(Timestamp timeCreated) {
+        this.timeCreated = timeCreated;
+    }
+
+    public Timestamp getTimeUpdated() {
+        return timeUpdated;
+    }
+
+    public void setTimeUpdated(Timestamp timeUpdated) {
+        this.timeUpdated = timeUpdated;
     }
 }

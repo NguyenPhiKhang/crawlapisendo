@@ -1,6 +1,7 @@
 package com.khangse616.crawlapisendo.models;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -25,6 +26,10 @@ public class User {
     private String address;
     @Column(name = "record_status")
     private boolean recordStatus;
+    @Column(name = "time_created")
+    private Timestamp timeCreated;
+    @Column(name = "time_updated")
+    private Timestamp timeUpdated;
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="image_avatar", unique= true, referencedColumnName = "id")
@@ -110,6 +115,22 @@ public class User {
 
     public void setImageAvatar(Image imageAvatar) {
         this.imageAvatar = imageAvatar;
+    }
+
+    public Timestamp getTimeCreated() {
+        return timeCreated;
+    }
+
+    public void setTimeCreated(Timestamp timeCreated) {
+        this.timeCreated = timeCreated;
+    }
+
+    public Timestamp getTimeUpdated() {
+        return timeUpdated;
+    }
+
+    public void setTimeUpdated(Timestamp timeUpdated) {
+        this.timeUpdated = timeUpdated;
     }
 }
 
