@@ -26,7 +26,7 @@ public class ImageService {
         return imageRepository.save(FileDB);
     }
 
-    public void stores(List<MultipartFile> multipartFiles) throws IOException {
+    public List<Image> stores(List<MultipartFile> multipartFiles) throws IOException {
         List<Image> images = new ArrayList<Image>();
         for (MultipartFile file : multipartFiles) {
             String fileName = StringUtils.cleanPath((Objects.requireNonNull(file.getOriginalFilename())));
@@ -34,7 +34,7 @@ public class ImageService {
 
             images.add(FileDB);
         }
-        imageRepository.saveAll(images);
+        return imageRepository.saveAll(images);
     }
 
     public Optional<Image> getFile(String id) {

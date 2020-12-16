@@ -41,26 +41,26 @@ public class ImageController {
     }
 
     @PostMapping("/images/upload-url")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestBody String url) throws IOException {
+    public ResponseEntity<ResponseMessage<Image>> uploadFile(@RequestBody String url) throws IOException {
         MultipartFile file = ImageUtil.createMultipartFileFromUrl(imageService, url);
         return ImageUtil.uploadImage(imageService, file);
     }
 
     @PostMapping("/images/upload-multi-url")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestBody String[] urls) throws IOException {
+    public ResponseEntity<ResponseMessage<List<Image>>> uploadFile(@RequestBody String[] urls) throws IOException {
         List<MultipartFile> files = ImageUtil.createMultipartFileFromUrls(imageService, urls);
         return ImageUtil.uploadImages(imageService, files);
     }
 
     @PostMapping("/images/upload-file")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<ResponseMessage<Image>> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         String fileName = ImageUtil.fileName(imageService).concat(".").concat(Objects.requireNonNull(file.getContentType()).split("/")[1]);
         MultipartFile multipartFile = new MockMultipartFile(fileName, fileName, file.getContentType(), file.getInputStream());
         return ImageUtil.uploadImage(imageService, multipartFile);
     }
 
     @PostMapping("/images/upload-multi-file")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("files") MultipartFile[] files) throws IOException {
+    public ResponseEntity<ResponseMessage<List<Image>>> uploadFile(@RequestParam("files") MultipartFile[] files) throws IOException {
         List<MultipartFile> multipartFiles = new ArrayList<>();
 
         Arrays.stream(files).forEach(file -> {

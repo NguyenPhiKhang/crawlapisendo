@@ -18,29 +18,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImageUtil {
-    public static ResponseEntity<ResponseMessage> uploadImage(ImageService imageService, MultipartFile file) {
+    public static ResponseEntity<ResponseMessage<Image>> uploadImage(ImageService imageService, MultipartFile file) {
         String message = "";
         try {
-            imageService.store(file);
+            Image image = imageService.store(file);
 
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message, file.getOriginalFilename()));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage<>(message, image));
         } catch (Exception e) {
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage<>(message));
         }
     }
 
-    public static ResponseEntity<ResponseMessage> uploadImages(ImageService imageService, List<MultipartFile> files) {
+    public static ResponseEntity<ResponseMessage<List<Image>>> uploadImages(ImageService imageService, List<MultipartFile> files) {
         String message = "";
         try {
-            imageService.stores(files);
+            List<Image> images = imageService.stores(files);
 
             message = "Uploaded the "+files.size() +" file successfully";
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage<>(message, images));
         } catch (Exception e) {
             message = "Could not upload the file!";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage<>(message));
         }
     }
 

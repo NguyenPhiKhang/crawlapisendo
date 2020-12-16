@@ -9,6 +9,7 @@ public class PropertiesProductDTO {
 
     private int id;
     private String name;
+    private int admin_id;
     private BigDecimal price;
     private BigDecimal finalPrice;
     private int promotionPercent;
@@ -32,7 +33,7 @@ public class PropertiesProductDTO {
     public PropertiesProductDTO() {
     }
 
-    public PropertiesProductDTO(int id, String name, BigDecimal price, BigDecimal finalPrice, int promotionPercent, boolean promotion, String description, String shortDescription, int weight, int quantity, boolean active, boolean shopFreeShipping, int orderCount, boolean stockStatus, String category, String sku, String skuUser, boolean freeShip, boolean event, String img_url, List<String> images) {
+    public PropertiesProductDTO(int id, String name, BigDecimal price, BigDecimal finalPrice, int promotionPercent, boolean promotion, String description, String shortDescription, int weight, int quantity, boolean active, boolean shopFreeShipping, int orderCount, boolean stockStatus, String category, String sku, String skuUser, boolean freeShip, boolean event, String img_url, List<String> images, int admin_id) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -54,6 +55,7 @@ public class PropertiesProductDTO {
         this.event = event;
         this.img_url = img_url;
         this.images = images;
+        this.admin_id = admin_id;
     }
 
     public String getImg_url() {
@@ -222,5 +224,13 @@ public class PropertiesProductDTO {
 
     public void setEvent(boolean event) {
         this.event = event;
+    }
+
+    public int getAdmin_id() {
+        return admin_id;
+    }
+
+    public void setAdmin_id(int admin_id) {
+        this.admin_id = admin_id;
     }
 }

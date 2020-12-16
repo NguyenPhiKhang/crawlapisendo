@@ -1,15 +1,15 @@
 package com.khangse616.crawlapisendo.messages;
 
-public class ResponseMessage {
+public class ResponseMessage<T> {
     private String message;
-    private String id;
+    private T data;
 
     public ResponseMessage(String message) {
         this.message = message;
     }
-    public ResponseMessage(String message, String id) {
+    public ResponseMessage(String message, T data) {
         this.message = message;
-        this.id = id;
+        this.data = data;
     }
 
     public String getMessage() {
@@ -20,11 +20,11 @@ public class ResponseMessage {
         this.message = message;
     }
 
-    public String getId() {
-        return id;
+    public T getData() {
+        return data;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setData(T data) {
+        this.data = data;
     }
 }
