@@ -5,15 +5,17 @@ public class UserDTO {
     private String name;
     private String imageAvatar;
     private boolean shop;
+    private String from;
 
     public UserDTO() {
     }
 
-    public UserDTO(int id, String name, String imageAvatar, boolean shop) {
+    public UserDTO(int id, String name, String imageAvatar, boolean shop, String from) {
         this.id = id;
         this.name = name;
         this.imageAvatar = imageAvatar;
         this.shop = shop;
+        this.from = from;
     }
 
     public int getId() {
@@ -46,5 +48,13 @@ public class UserDTO {
 
     public void setShop(boolean shop) {
         this.shop = shop;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
     }
 }

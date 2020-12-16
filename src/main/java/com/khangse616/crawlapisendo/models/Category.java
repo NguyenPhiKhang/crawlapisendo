@@ -28,7 +28,7 @@ public class Category implements Serializable {
     @Column(name = "icon")
     private String icon;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     @JsonIgnore
     private Category parentCategory;
@@ -39,13 +39,7 @@ public class Category implements Serializable {
 //    @JsonIgnore
     private Set<Category> categories = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH} )
-    @JoinTable(
-            name = "category_product",
-            joinColumns =
-            @JoinColumn(name = "category_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
-    @JsonIgnore
+    @ManyToMany(targetEntity = Product.class, mappedBy = "categories", cascade = CascadeType.ALL)
     private Set<Product> products = new HashSet<>();
 
     public Category(){}

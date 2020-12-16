@@ -1,5 +1,6 @@
 package com.khangse616.crawlapisendo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -65,7 +66,14 @@ public class Product implements Serializable {
             mappedBy = "product")
     private RatingStar ratingStar;
 
-    @ManyToMany(mappedBy = "products", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH},  fetch = FetchType.LAZY)
+
+    @ManyToMany(targetEntity = Category.class, cascade = CascadeType.ALL )
+    @JoinTable(
+            name = "category_product",
+            joinColumns =
+            @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
+    @JsonIgnore
     private Set<Category> categories = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
