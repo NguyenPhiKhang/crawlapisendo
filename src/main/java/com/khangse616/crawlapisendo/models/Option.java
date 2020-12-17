@@ -14,16 +14,11 @@ public class Option {
     @Column(name = "value")
     private String value;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "attribute_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "attribute_id")
     private Attribute attribute;
 
-    @ManyToMany(targetEntity = Product.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinTable(
-            name = "option_product",
-            joinColumns =
-            @JoinColumn(name = "option_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
+    @ManyToMany(targetEntity = Product.class, mappedBy = "options", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
     @JsonIgnore
     private Set<Product> products;
 

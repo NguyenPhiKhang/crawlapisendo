@@ -88,7 +88,12 @@ public class Product implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "image_id", referencedColumnName = "id"))
     private Set<Image> images = new HashSet<>();
 
-    @ManyToMany(targetEntity = Option.class, mappedBy = "products", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+    @ManyToMany(targetEntity = Option.class, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "option_product",
+            joinColumns =
+            @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "option_id", referencedColumnName = "id"))
     private Set<Option> options;
 
     @OneToMany(targetEntity = Comment.class, mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -169,43 +170,43 @@ public class ProductService {
 //            product.setShop(shopRepository.findById(shopDTO.getId()).get());
 //        }
 
-        CategoriesProductDTO categoriesProductDTO = productDTO.getCategories();
-        if(!categoryRepository.existsById(categoriesProductDTO.getCategory_level1_id())){
-            Category category = new Category();
-            category.setId(categoriesProductDTO.getCategory_level1_id());
-            category.setLevel(1);
-            category.setName(categoriesProductDTO.getCategory_level1_name());
-            category.setCategoryPath(categoriesProductDTO.getCategory_level1_path());
-
-            categoryRepository.save(category);
-        }
-        if(!categoryRepository.existsById(categoriesProductDTO.getCategory_level2_id())){
-            Category category = new Category();
-            category.setId(categoriesProductDTO.getCategory_level2_id());
-            category.setLevel(2);
-            category.setName(categoriesProductDTO.getCategory_level2_name());
-            category.setCategoryPath(categoriesProductDTO.getCategory_level2_path());
-            category.setParentCategory(categoryRepository.findById(categoriesProductDTO.getCategory_level1_id()).get());
-
-            categoryRepository.save(category);
-        }
-        if(!categoryRepository.existsById(categoriesProductDTO.getCategory_level3_id())){
-            Category category = new Category();
-            category.setId(categoriesProductDTO.getCategory_level3_id());
-            category.setLevel(3);
-            category.setName(categoriesProductDTO.getCategory_level3_name());
-            category.setCategoryPath(categoriesProductDTO.getCategory_level3_path());
-            category.setParentCategory(categoryRepository.findById(categoriesProductDTO.getCategory_level2_id()).get());
-
-            categoryRepository.save(category);
-        }
-
-        Set<Category> categories = new HashSet<>(categoryRepository.findAllCategoryByProduct(categoriesProductDTO.getCategory_level1_id(), categoriesProductDTO.getCategory_level2_id(), categoriesProductDTO.getCategory_level3_id()));
-        product.setCategories(categories);
+//        CategoriesProductDTO categoriesProductDTO = productDTO.getCategories();
+//        if (!categoryRepository.existsById(categoriesProductDTO.getCategory_level1_id())) {
+//            Category category = new Category();
+//            category.setId(categoriesProductDTO.getCategory_level1_id());
+//            category.setLevel(1);
+//            category.setName(categoriesProductDTO.getCategory_level1_name());
+//            category.setCategoryPath(categoriesProductDTO.getCategory_level1_path());
+//
+//            categoryRepository.save(category);
+//        }
+//        if (!categoryRepository.existsById(categoriesProductDTO.getCategory_level2_id())) {
+//            Category category = new Category();
+//            category.setId(categoriesProductDTO.getCategory_level2_id());
+//            category.setLevel(2);
+//            category.setName(categoriesProductDTO.getCategory_level2_name());
+//            category.setCategoryPath(categoriesProductDTO.getCategory_level2_path());
+//            category.setParentCategory(categoryRepository.findById(categoriesProductDTO.getCategory_level1_id()).get());
+//
+//            categoryRepository.save(category);
+//        }
+//        if (!categoryRepository.existsById(categoriesProductDTO.getCategory_level3_id())) {
+//            Category category = new Category();
+//            category.setId(categoriesProductDTO.getCategory_level3_id());
+//            category.setLevel(3);
+//            category.setName(categoriesProductDTO.getCategory_level3_name());
+//            category.setCategoryPath(categoriesProductDTO.getCategory_level3_path());
+//            category.setParentCategory(categoryRepository.findById(categoriesProductDTO.getCategory_level2_id()).get());
+//
+//            categoryRepository.save(category);
+//        }
+//
+//        Set<Category> categories = new HashSet<>(categoryRepository.findAllCategoryByProduct(categoriesProductDTO.getCategory_level1_id(), categoriesProductDTO.getCategory_level2_id(), categoriesProductDTO.getCategory_level3_id()));
+//        product.setCategories(categories);
 
         List<AttributeDTO> attributeDTOS = productDTO.getAttributes();
-        for(AttributeDTO attributeDTO: attributeDTOS){
-            if(!attributeRepository.existsById(attributeDTO.getId())){
+        for (AttributeDTO attributeDTO : attributeDTOS) {
+            if (!attributeRepository.existsById(attributeDTO.getId())) {
                 Attribute attribute = new Attribute();
                 attribute.setId(attributeDTO.getId());
                 attribute.setName(attributeDTO.getName());
@@ -216,14 +217,18 @@ public class ProductService {
         }
 
         List<OptionDTO> optionDTOS = productDTO.getOptions();
-        for(OptionDTO optionDTO: optionDTOS){
-            if(!optionRepository.existsById(optionDTO.getId())){
+        for (OptionDTO optionDTO : optionDTOS) {
+            if (!optionRepository.existsById(optionDTO.getId())) {
                 Option option = new Option();
                 option.setId(optionDTO.getId());
                 option.setValue(optionDTO.getValue());
+                option.setAttribute(attributeRepository.findById(optionDTO.getAttribute()).get());
 
+                optionRepository.save(option);
             }
         }
+
+        product.setOptions(new HashSet<>(optionRepository.findByIdIn(optionDTOS.stream().map(OptionDTO::getId).collect(Collectors.toList()))));
 
         productRepository.save(product);
         return String.valueOf(productDTO.getProperties().getId());
