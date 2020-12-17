@@ -5,6 +5,7 @@ import com.khangse616.crawlapisendo.controllers.ImageController;
 import com.khangse616.crawlapisendo.messages.ResponseMessage;
 import com.khangse616.crawlapisendo.models.*;
 import com.khangse616.crawlapisendo.repositories.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -230,6 +231,10 @@ public class ProductService {
 
         product.setOptions(new HashSet<>(optionRepository.findByIdIn(optionDTOS.stream().map(OptionDTO::getId).collect(Collectors.toList()))));
 
+        RatingStarDTO ratingStarDTO = productDTO.getRating_star();
+        RatingStar ratingStar = new RatingStar(ratingStarDTO.getStar1(),ratingStarDTO.getStar2(),ratingStarDTO.getStar3(),ratingStarDTO.getStar4(),ratingStarDTO.getStar5());
+
+        product.setRatingStar(ratingStarRepository.save(ratingStar));
         productRepository.save(product);
         return String.valueOf(productDTO.getProperties().getId());
     }

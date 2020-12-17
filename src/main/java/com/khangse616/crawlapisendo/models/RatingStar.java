@@ -25,8 +25,9 @@ public class RatingStar {
     @Column(name = "star5")
     private int star5;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "ratingStar")
     @JsonIgnore
     private Product product;
 

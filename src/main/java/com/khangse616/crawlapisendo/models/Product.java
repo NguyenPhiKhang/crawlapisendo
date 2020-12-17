@@ -61,9 +61,9 @@ public class Product implements Serializable {
     @Column(name = "time_updated")
     private Timestamp timeUpdated;
 
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade =  CascadeType.ALL,
-            mappedBy = "product")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rating_star_id")
+//    @JsonIgnore
     private RatingStar ratingStar;
 
 
