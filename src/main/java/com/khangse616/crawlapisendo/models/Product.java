@@ -29,8 +29,10 @@ public class Product implements Serializable {
     @Column(name = "is_promotion")
     private boolean promotion;
     @Column(name = "description")
+    @JsonIgnore
     private String description;
     @Column(name = "short_description")
+    @JsonIgnore
     private String shortDescription;
     @Column(name = "weight")
     private int weight;
@@ -63,7 +65,7 @@ public class Product implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rating_star_id")
-//    @JsonIgnore
+    @JsonIgnore
     private RatingStar ratingStar;
 
 
@@ -78,6 +80,7 @@ public class Product implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")
+    @JsonIgnore
     private Shop shop;
 
     @ManyToMany(targetEntity = Image.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
@@ -86,6 +89,7 @@ public class Product implements Serializable {
             joinColumns =
             @JoinColumn(name = "product_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "image_id", referencedColumnName = "id"))
+
     private Set<Image> images = new HashSet<>();
 
     @ManyToMany(targetEntity = Option.class, cascade = CascadeType.ALL)
@@ -94,12 +98,15 @@ public class Product implements Serializable {
             joinColumns =
             @JoinColumn(name = "product_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "option_id", referencedColumnName = "id"))
+    @JsonIgnore
     private Set<Option> options;
 
     @OneToMany(targetEntity = Comment.class, mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Comment> comments;
 
     @OneToMany(targetEntity = Rating.class, mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Rating> ratings;
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
@@ -107,6 +114,11 @@ public class Product implements Serializable {
     private Image imgUrl;
 
     public Product(){}
+
+    public void removeImage(Image image){
+        this.images.remove(image);
+        image.getProducts().remove(this);
+    }
 
     public int getId() {
         return id;

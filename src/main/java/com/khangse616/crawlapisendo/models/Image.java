@@ -1,6 +1,7 @@
 package com.khangse616.crawlapisendo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,6 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "images")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Image implements Serializable {
     @Id
     private String id;
@@ -20,9 +22,16 @@ public class Image implements Serializable {
     @JsonIgnore
     private byte[] data;
 
+    @Column(name="link")
+    private String link;
+
     @ManyToMany(targetEntity = Product.class, mappedBy = "images", cascade = {CascadeType.PERSIST, CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
     @JsonIgnore
     private Set<Product> products;
+
+//    @OneToOne(targetEntity = Product.class, mappedBy = "imgUrl", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private Product product;
 
     public Image(){}
 
@@ -31,6 +40,13 @@ public class Image implements Serializable {
         this.name = name;
         this.type = type;
         this.data = data;
+    }
+
+    public Image(String id, String name, String type, String link) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.link = link;
     }
 
     public String getId() {
@@ -72,4 +88,20 @@ public class Image implements Serializable {
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    //    public Product getProduct() {
+//        return product;
+//    }
+//
+//    public void setProduct(Product product) {
+//        this.product = product;
+//    }
 }

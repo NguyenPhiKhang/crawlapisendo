@@ -94,7 +94,7 @@ public class ImageUtil {
              * Create Random file name but unique by adding timestamp with extension
              ********/
 
-            String fileName = fileName(imageService).concat(".").concat(typeImage.toLowerCase());
+            String fileName = fileName(imageService, typeImage);
 
             /********
              * Step 6
@@ -106,7 +106,7 @@ public class ImageUtil {
             MultipartFile multipartFile = new MockMultipartFile(fileName, fileName, "image/" + typeImage, byteArrayOutputStream.toByteArray());
             byteArrayOutputStream.close(); // Close once it is done saving
             return multipartFile;
-        } catch (IOException exception) {
+        } catch (Exception exception) {
             return null;
         }
     }
@@ -121,13 +121,80 @@ public class ImageUtil {
         return multipartFiles;
     }
 
-    public static String fileName(ImageService imageService) {
-//        String filename = "";
-//        do {
-//            filename = RandomStringUtils.randomAlphanumeric(20);
-//        }while (imageService.checkExistsId(filename));
-//        return filename;
+    public static String fileName(ImageService imageService, String typeImage) {
+        String nameImage = "";
+        do {
+            nameImage = RandomStringUtils.randomAlphanumeric(20).concat(".").concat(typeImage.toLowerCase());
+        } while (imageService.checkExistsId(nameImage));
+        return nameImage;
 
+//        return RandomStringUtils.randomAlphanumeric(20);
+    }
+
+    public static String fileName() {
         return RandomStringUtils.randomAlphanumeric(20);
+    }
+
+    public static String[] linkandid(ImageService imageService, String url) {
+        if (url.equals("") || url.isEmpty() || url.contains("mstatic.scdn.vn"))
+            return null;
+        try {
+            String imageUrl = url.contains("media3.scdn.vn") ? url : "https://media3.scdn.vn" + url;
+
+            System.out.println(imageUrl);
+            /*******************Multipart Upload Method*********************************
+             **              To resources like minio or DB
+             ***************************************************************************/
+
+            String[] typesImage = url.split("\\.");
+            String typeImage = typesImage[typesImage.length - 1];
+            System.out.println(typeImage);
+
+            String fileName = fileName(imageService, typeImage);
+
+            return new String[]{fileName, "image/"+typeImage, imageUrl};
+        }catch (Exception ex){
+            return null;
+        }
+    }
+    public static List<String[]> linkandids(ImageService imageService, String[] urls) {
+        List<String[]> multiFiles = new ArrayList<String[]>();
+        for (String url : urls) {
+            String[] file = linkandid(imageService, url);
+            if (file != null)
+                multiFiles.add(file);
+        }
+        return multiFiles;
+    }
+
+
+    public static ResponseEntity<ResponseMessage<Image>> uploadImageNoData(ImageService imageService, String[] file){
+        String message = "";
+        if (file != null) {
+            try {
+                Image image = imageService.saveImageByLink(file);
+
+                message = "Uploaded the file successfully";
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage<>(message, image));
+            } catch (Exception e) {
+                message = "Could not upload the file";
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage<>(message));
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage<>(""));
+        }
+    }
+
+    public static ResponseEntity<ResponseMessage<List<Image>>> uploadImagesNoData(ImageService imageService, List<String[]> files){
+        String message = "";
+        try {
+            List<Image> images = imageService.saveImagesByLink(files);
+
+            message = "Uploaded the " + files.size() + " file successfully";
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage<>(message, images));
+        } catch (Exception e) {
+            message = "Could not upload the file!";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage<>(message));
+        }
     }
 }

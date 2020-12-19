@@ -51,4 +51,19 @@ public class ImageService {
     }
 
     public boolean checkExistsId(String id){return imageRepository.existsById(id);}
+
+    public Image saveImageByLink(String[] file){
+        Image FileDB = new Image(file[0], file[0], file[1], file[2]);
+
+        return imageRepository.save(FileDB);
+    }
+
+    public List<Image> saveImagesByLink(List<String[]> files){
+        List<Image> images = new ArrayList<Image>();
+        for (String[] file : files) {
+            Image FileDB = new Image(file[0], file[0], file[1], file[2]);
+            images.add(FileDB);
+        }
+        return imageRepository.saveAll(images);
+    }
 }

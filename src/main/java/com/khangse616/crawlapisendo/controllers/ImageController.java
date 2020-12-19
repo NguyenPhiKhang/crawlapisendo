@@ -37,6 +37,7 @@ public class ImageController {
     @GetMapping("/images/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable String id) {
         Image image = imageService.getFile(id).orElseThrow(() -> new ResourceNotFoundException("khong tim thay image id: " + id));
+
         return ResponseEntity.ok().contentType(MediaType.valueOf(image.getType())).body(image.getData());
     }
 
@@ -46,15 +47,27 @@ public class ImageController {
         return ImageUtil.uploadImage(imageService, file);
     }
 
+    public ResponseEntity<ResponseMessage<Image>> uploadImageLink(String url){
+        String[] s = ImageUtil.linkandid(imageService, url);
+        return ImageUtil.uploadImageNoData(imageService, s);
+
+    }
+
     @PostMapping("/images/upload-multi-url")
     public ResponseEntity<ResponseMessage<List<Image>>> uploadFile(@RequestBody String[] urls) throws IOException {
         List<MultipartFile> files = ImageUtil.createMultipartFileFromUrls(imageService, urls);
         return ImageUtil.uploadImages(imageService, files);
     }
 
+    public ResponseEntity<ResponseMessage<List<Image>>> uploadImageLinks(String[] urls){
+        List<String[]> ss = ImageUtil.linkandids(imageService, urls);
+        return ImageUtil.uploadImagesNoData(imageService, ss);
+
+    }
+
     @PostMapping("/images/upload-file")
     public ResponseEntity<ResponseMessage<Image>> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        String fileName = ImageUtil.fileName(imageService).concat(".").concat(Objects.requireNonNull(file.getContentType()).split("/")[1]);
+        String fileName = ImageUtil.fileName().concat(".").concat(Objects.requireNonNull(file.getContentType()).split("/")[1]);
         MultipartFile multipartFile = new MockMultipartFile(fileName, fileName, file.getContentType(), file.getInputStream());
         return ImageUtil.uploadImage(imageService, multipartFile);
     }
@@ -64,7 +77,7 @@ public class ImageController {
         List<MultipartFile> multipartFiles = new ArrayList<>();
 
         Arrays.stream(files).forEach(file -> {
-            String fileName = ImageUtil.fileName(imageService).concat(".").concat(Objects.requireNonNull(file.getContentType()).split("/")[1]);
+            String fileName = ImageUtil.fileName().concat(".").concat(Objects.requireNonNull(file.getContentType()).split("/")[1]);
             try {
                 MultipartFile multipartFile = new MockMultipartFile(fileName, fileName, file.getContentType(), file.getInputStream());
                 multipartFiles.add(multipartFile);

@@ -11,7 +11,6 @@ import javax.persistence.*;
 public class RatingStar {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "star1")
@@ -34,7 +33,8 @@ public class RatingStar {
     public RatingStar() {
     }
 
-    public RatingStar(int star1, int star2, int star3, int star4, int star5) {
+    public RatingStar(int id, int star1, int star2, int star3, int star4, int star5) {
+        this.id = id;
         this.star1 = star1;
         this.star2 = star2;
         this.star3 = star3;
